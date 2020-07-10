@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/fragment_live"
+        android:contentDescription="@string/live_item"
+        android:icon="@drawable/ic_baseline_live_tv_24"
+        android:title="@string/live_item" />
+    <item
+        android:id="@+id/fragment_info"
+        android:contentDescription="@string/info_item"
+        android:icon="@drawable/ic_baseline_live_tv_24"
+        android:title="@string/info_item" />
+
+    <item
+        android:id="@+id/fragment_record"
+        android:contentDescription="@string/record_item"
+        android:icon="@drawable/ic_baseline_live_tv_24"
+        android:title="@string/record_item"
+
+        />
+    <item
+        android:id="@+id/fragment_statistics"
+        android:contentDescription="@string/statistics_item"
+        android:icon="@drawable/ic_baseline_live_tv_24"
+        android:title="@string/statistics_item"
+        />
+</menu>
