@@ -6,7 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import com.brins.nba.R
+import com.brins.nba.api.result.LiveResultData
 import com.brins.nba.databinding.FragmentLiveBinding
 import com.brins.nba.utils.InjectorUtil
 import com.brins.nba.viewmodel.live.LiveViewModel
@@ -26,7 +28,11 @@ class LiveFragment : BaseDBFragment<FragmentLiveBinding>() {
     }
 
     override fun initEventAndData() {
-
+        mLiveViewModel.mSchedule?.observe(this,
+            Observer<LiveResultData> {
+                it.code
+            })
+        mLiveViewModel.fetchSchedule()
     }
 
 

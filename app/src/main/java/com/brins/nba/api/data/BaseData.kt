@@ -1,6 +1,5 @@
 package com.brins.nba.api.data
-
-import com.brins.nba.api.APPKEY
+import com.brins.nba.api.ServiceApi.APPKEY
 import com.brins.nba.utils.MD5Util
 
 

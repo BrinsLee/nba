@@ -11,7 +11,7 @@ import retrofit2.http.Query
  */
 interface INBASchedule {
 
-    @GET("")
+    @GET("?")
     fun getNbaSchedule(
         @Query("service") service: String, @Query("timestamp") time: Long
         , @Query("sign") sign: String
