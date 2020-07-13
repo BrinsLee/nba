@@ -16,7 +16,7 @@
         android:id="@+id/fragment_info"
         android:name="com.brins.nba.ui.fragment.InfoFragment"
         android:label="info_fragment"
-        tools:layout="@layout/fragment_live">
+        tools:layout="@layout/fragment_info">
 
     </fragment>
 

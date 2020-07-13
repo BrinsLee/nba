@@ -1,10 +1,8 @@
 package com.brins.nba.utils
 
-import java.io.UnsupportedEncodingException
-import java.lang.RuntimeException
-import java.security.MessageDigest
-import java.security.NoSuchAlgorithmException
-import kotlin.experimental.and
+import android.content.Context
+import android.content.Intent
+import com.brins.nba.ui.activity.WebViewActivity
 
 /**
  * @author lipeilin
@@ -30,3 +28,11 @@ import kotlin.experimental.and
     }
     return hex.toString();
 }*/
+
+
+fun jumpToWebViewActivity(activity: Context, url: String) {
+    val intent = Intent(activity, WebViewActivity::class.java)
+    intent.putExtra(WebViewActivity.KEY_URL, url)
+    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    activity.startActivity(intent)
+}

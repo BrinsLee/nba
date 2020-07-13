@@ -7,6 +7,7 @@ import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Looper
 import android.os.Process
+import android.util.Log
 import androidx.annotation.Nullable
 import androidx.appcompat.app.AppCompatActivity
 import com.brins.nba.AppManager
@@ -19,17 +20,6 @@ abstract class BaseActivity : AppCompatActivity() {
     private val mMainThread = Looper.getMainLooper().thread
     private var mScheduledExecutorService: ScheduledExecutorService? = null
 
-
-    protected fun showLoading(content: String? = null) {
-        /*if (mLoadingDialogFragment == null) {
-            mLoadingDialogFragment = LoadingDialogFragment.showSelf(supportFragmentManager, content)
-        }*/
-    }
-
-    protected fun hideLoading() {
-        /*mLoadingDialogFragment?.dismiss()
-        mLoadingDialogFragment = null*/
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

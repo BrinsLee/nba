@@ -1,2 +1,3 @@
+include ':recyclerlib'
 include ':app'
 rootProject.name = "Nba"

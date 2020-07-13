@@ -43,6 +43,10 @@ abstract class BaseDBFragment<T : ViewDataBinding> : Fragment() {
 
     }
 
+    override fun onAttachFragment(childFragment: Fragment) {
+        super.onAttachFragment(childFragment)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (isRegisterEventBus()) {

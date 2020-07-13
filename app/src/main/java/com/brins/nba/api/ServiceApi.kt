@@ -1,5 +1,6 @@
 package com.brins.nba.api
 
+import com.brins.nba.api.impl.INBANewsService
 import com.brins.nba.api.impl.INBASchedule
 
 object ServiceApi {
@@ -9,22 +10,35 @@ object ServiceApi {
     val NBA_SCHEDULE = "Nba.Schedule"
     val NBA_NEWS_INFO = "Nba.News_info"
     val NBA_NEWS_LIST = "Nba.New_list"
+    val NBA_NEWS_COMMENTS = "Nba.news_comments"
 
 
 
-
-    private var msCheduleService: INBASchedule? = null
+    private var mScheduleService: INBASchedule? = null
+    private var mNewsListService: INBANewsService? = null
 
     fun getScheduleService(): INBASchedule {
-        if (msCheduleService == null) {
+        if (mScheduleService == null) {
             synchronized(INBASchedule::class.java) {
-                if (msCheduleService == null) {
-                    msCheduleService = RetrofitFactory.newRetrofit(DOMAIN)
+                if (mScheduleService == null) {
+                    mScheduleService = RetrofitFactory.newRetrofit(DOMAIN)
                         .create(INBASchedule::class.java)
                 }
             }
         }
-        return msCheduleService!!
+        return mScheduleService!!
+    }
+
+    fun getNewsListService(): INBANewsService {
+        if (mNewsListService == null) {
+            synchronized(INBASchedule::class.java) {
+                if (mNewsListService == null) {
+                    mNewsListService = RetrofitFactory.newRetrofit(DOMAIN)
+                        .create(INBANewsService::class.java)
+                }
+            }
+        }
+        return mNewsListService!!
     }
 
 }
