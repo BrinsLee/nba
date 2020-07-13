@@ -1,4 +1,4 @@
-package com.brins.nba.viewmodel.info
+package com.brins.nba.viewmodel.news
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

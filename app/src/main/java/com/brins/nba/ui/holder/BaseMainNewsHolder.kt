@@ -13,6 +13,7 @@ import com.brins.nba.utils.jumpToWebViewActivity
 import com.brins.nba.widget.RoundedImageView
 import com.bumptech.glide.Glide
 import com.chad.library.adapter.base.BaseViewHolder
+import org.jsoup.Jsoup
 
 /**
  * @author lipeilin
@@ -35,7 +36,15 @@ class BaseMainNewsHolder(view: View) : BaseViewHolder<BaseMainNewsData>(view) {
             GlideHelper.setImageResource(mImage, data.imgSrc)
         }
         mRoot.setOnClickListener {
-            jumpToWebViewActivity(mContext, data!!.url)
+            parseHtml(data!!.url)
+            /*jumpToWebViewActivity(mContext, data!!.url)*/
         }
+    }
+
+    fun parseHtml(url: String): String {
+        val doc = Jsoup.connect(url).get()
+        val element = doc.select("div.head")
+        val title = element.select("h1").attr("title")
+        return title
     }
 }

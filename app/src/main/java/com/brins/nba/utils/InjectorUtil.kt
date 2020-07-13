@@ -1,7 +1,7 @@
 package com.brins.nba.utils
 
-import com.brins.nba.viewmodel.info.NewsModelFactory
-import com.brins.nba.viewmodel.info.NewsRepository
+import com.brins.nba.viewmodel.news.NewsModelFactory
+import com.brins.nba.viewmodel.news.NewsRepository
 import com.brins.nba.viewmodel.live.LiveModelFactory
 import com.brins.nba.viewmodel.live.LiveRepository
 

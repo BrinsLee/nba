@@ -1,13 +1,11 @@
-package com.brins.nba.viewmodel.info
+package com.brins.nba.viewmodel.news
 
 import com.brins.nba.api.ServiceApi
 import com.brins.nba.api.data.BaseData
 import com.brins.nba.api.data.CommentRequestData
-import com.brins.nba.api.response.LiveResponse
 import com.brins.nba.api.response.NewsCommentResponse
 import com.brins.nba.api.response.NewsListResponse
 import com.brins.nba.repository.BaseRepository
-import com.brins.nba.viewmodel.live.LiveRepository
 
 class NewsRepository : BaseRepository() {
 

@@ -1,23 +1,13 @@
 package com.brins.nba.ui.fragment
 
 import android.content.Context
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.brins.nba.R
-import com.brins.nba.api.result.NewsResultData
 import com.brins.nba.ui.adapter.BaseMainAdapter
 import com.brins.nba.ui.data.BaseMainNewsData
-import com.brins.nba.ui.itemdecoration.ItemDecoration
 import com.brins.nba.utils.InjectorUtil
-import com.brins.nba.viewmodel.info.NewsViewModel
-import com.brins.nba.viewmodel.live.LiveViewModel
-import com.chad.library.adapter.base.OnLoadDataCompleteCallback
-import com.chad.library.adapter.base.OnLoadDataListener
+import com.brins.nba.viewmodel.news.NewsViewModel
 import com.chad.library.adapter.base.model.BaseData
 import kotlinx.android.synthetic.main.fragment_info.*
 

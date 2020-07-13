@@ -1,4 +1,4 @@
-package com.brins.nba.viewmodel.info
+package com.brins.nba.viewmodel.news
 
 import androidx.lifecycle.MutableLiveData
 import com.brins.nba.api.data.BaseData
@@ -8,6 +8,7 @@ import com.brins.nba.api.result.NewsResultData
 import com.brins.nba.viewmodel.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import org.jsoup.Jsoup
 
 class NewsViewModel(repository: NewsRepository) : BaseViewModel(repository) {
 
@@ -50,4 +51,12 @@ class NewsViewModel(repository: NewsRepository) : BaseViewModel(repository) {
             val resultData = (respository as NewsRepository).fetchNewsComment(data)
             resultData
         }
+
+
+    fun parseHtml(url: String): String {
+        val doc = Jsoup.connect(url).get()
+        val element = doc.select("div.head")
+        val title = element.select("h1").attr("title")
+        return title
+    }
 }
