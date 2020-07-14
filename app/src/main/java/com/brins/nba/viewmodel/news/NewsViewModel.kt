@@ -3,6 +3,7 @@ package com.brins.nba.viewmodel.news
 import androidx.lifecycle.MutableLiveData
 import com.brins.nba.api.data.BaseData
 import com.brins.nba.api.data.CommentRequestData
+import com.brins.nba.api.data.news.SingleNewsListData
 import com.brins.nba.api.result.CommentResultData
 import com.brins.nba.api.result.NewsResultData
 import com.brins.nba.viewmodel.BaseViewModel
@@ -13,7 +14,7 @@ import org.jsoup.Jsoup
 class NewsViewModel(repository: NewsRepository) : BaseViewModel(repository) {
 
 
-    val mNewsList: MutableLiveData<List<NewsResultData>> = MutableLiveData()
+    val mNewsList: SingleNewsListData = SingleNewsListData.get()
     val mNewsComment: MutableLiveData<List<CommentResultData>> = MutableLiveData()
     val mTitle: MutableLiveData<String> = MutableLiveData()
 

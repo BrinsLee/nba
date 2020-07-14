@@ -1,19 +1,14 @@
 package com.brins.nba.ui.holder
 
-import android.app.Activity
 import android.view.View
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.brins.nba.R
 import com.brins.nba.ui.data.BaseMainNewsData
 import com.brins.nba.utils.GlideHelper.GlideHelper
 import com.brins.nba.utils.jumpToWebViewActivity
-import com.brins.nba.widget.RoundedImageView
-import com.bumptech.glide.Glide
 import com.chad.library.adapter.base.BaseViewHolder
-import org.jsoup.Jsoup
 
 /**
  * @author lipeilin
