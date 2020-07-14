@@ -15,7 +15,7 @@ class NewsViewModel(repository: NewsRepository) : BaseViewModel(repository) {
 
     val mNewsList: MutableLiveData<List<NewsResultData>> = MutableLiveData()
     val mNewsComment: MutableLiveData<List<CommentResultData>> = MutableLiveData()
-
+    val mTitle: MutableLiveData<String> = MutableLiveData()
 
     fun fetchNewsList() {
         launch(
@@ -53,10 +53,37 @@ class NewsViewModel(repository: NewsRepository) : BaseViewModel(repository) {
         }
 
 
-    fun parseHtml(url: String): String {
+    fun parseHtml(url: String) {
+        launch({
+            val title = parseHtmlTitle(url)
+            val date = parseHtmlDate(url)
+            mTitle.value = title
+        }, {})
+    }
+
+    private suspend fun parseHtmlTitle(url: String) = withContext(Dispatchers.IO) {
         val doc = Jsoup.connect(url).get()
         val element = doc.select("div.head")
-        val title = element.select("h1").attr("title")
-        return title
+
+        val titleElement = element.select("h1.title")
+        var title = ""
+        titleElement?.let {
+            if (titleElement.isNotEmpty())
+                title = titleElement[0].childNodes().toString()
+        }
+        title
+    }
+
+    private suspend fun parseHtmlDate(url: String) = withContext(Dispatchers.IO) {
+        val doc = Jsoup.connect(url).get()
+        val element = doc.select("div.head")
+
+        val dateElement = element.select("div.info")
+        var date = ""
+        dateElement?.let {
+            if (dateElement.isNotEmpty())
+                date = dateElement[0].childNode(1).childNodes().toString()
+        }
+        date
     }
 }

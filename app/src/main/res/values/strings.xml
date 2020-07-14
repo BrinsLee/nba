@@ -5,5 +5,6 @@
     <string name="info_item">NBA资讯</string>
     <string name="record_item">球队战绩</string>
     <string name="statistics_item">数据统计</string>
+    <string name="fast_new">快讯</string>
 
 </resources>

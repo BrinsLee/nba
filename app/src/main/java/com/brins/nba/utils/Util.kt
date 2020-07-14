@@ -2,7 +2,7 @@ package com.brins.nba.utils
 
 import android.content.Context
 import android.content.Intent
-import com.brins.nba.ui.activity.WebViewActivity
+import com.brins.nba.ui.activity.NewsInfoActivity
 
 /**
  * @author lipeilin
@@ -31,8 +31,8 @@ import com.brins.nba.ui.activity.WebViewActivity
 
 
 fun jumpToWebViewActivity(activity: Context, url: String) {
-    val intent = Intent(activity, WebViewActivity::class.java)
-    intent.putExtra(WebViewActivity.KEY_URL, url)
+    val intent = Intent(activity, NewsInfoActivity::class.java)
+    intent.putExtra(NewsInfoActivity.KEY_URL, url)
     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
     activity.startActivity(intent)
 }

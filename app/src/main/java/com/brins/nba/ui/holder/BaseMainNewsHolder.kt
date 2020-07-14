@@ -36,15 +36,8 @@ class BaseMainNewsHolder(view: View) : BaseViewHolder<BaseMainNewsData>(view) {
             GlideHelper.setImageResource(mImage, data.imgSrc)
         }
         mRoot.setOnClickListener {
-            parseHtml(data!!.url)
-            /*jumpToWebViewActivity(mContext, data!!.url)*/
-        }
-    }
 
-    fun parseHtml(url: String): String {
-        val doc = Jsoup.connect(url).get()
-        val element = doc.select("div.head")
-        val title = element.select("h1").attr("title")
-        return title
+            jumpToWebViewActivity(mContext, data!!.url)
+        }
     }
 }

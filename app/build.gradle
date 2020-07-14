@@ -30,7 +30,7 @@ android {
     }
 
     dataBinding {
-        enabled true
+        enabled = true
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8

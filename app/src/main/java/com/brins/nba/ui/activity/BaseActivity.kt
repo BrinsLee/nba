@@ -64,7 +64,9 @@ abstract class BaseActivity : AppCompatActivity() {
     protected open fun onCreateBeforeBinding(@Nullable savedInstanceState: Bundle?) {}
 
 
-    protected abstract fun getLayoutResId(): Int
+    protected open fun getLayoutResId(): Int{
+        return 0
+    }
 
     protected open fun onCreateAfterBinding(@Nullable savedInstanceState: Bundle?) {
     }
