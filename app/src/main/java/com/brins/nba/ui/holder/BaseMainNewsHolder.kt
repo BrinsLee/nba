@@ -32,7 +32,7 @@ class BaseMainNewsHolder(view: View) : BaseViewHolder<BaseMainNewsData>(view) {
         }
         mRoot.setOnClickListener {
 
-            jumpToWebViewActivity(mContext, data!!.url)
+            jumpToWebViewActivity(mContext, dataPosition)
         }
     }
 }
