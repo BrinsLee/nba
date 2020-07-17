@@ -6,9 +6,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.brins.nba.R
+import com.brins.nba.api.data.CommentRequestData
 import com.brins.nba.api.result.NewsResultData
 import com.brins.nba.databinding.ActivityNewsInfoBinding
 import com.brins.nba.ui.adapter.BaseMainAdapter
+import com.brins.nba.ui.data.BaseMainContentData
 import com.brins.nba.utils.InjectorUtil
 import com.brins.nba.viewmodel.news.NewsViewModel
 import com.chad.library.adapter.base.OnLoadDataCompleteCallback
@@ -49,16 +51,29 @@ class NewsInfoActivity : BaseActivity() {
         if (mNews?.content == null) {
             mNewsInfoViewModel.parseHtml(mPos)
         } else {
-            mAdapter.setOnLoadDataListener { _, _, onLoadDataCompleteCallback -> onLoadDataCompleteCallback.onLoadDataSuccess(mNews?.content) }
+            mAdapter.setOnLoadDataListener { _, _, onLoadDataCompleteCallback ->
+                mNewsInfoViewModel.fetchNewsComment(CommentRequestData(mNews!!.docid))
+                onLoadDataCompleteCallback.onLoadDataSuccess(mNews?.content)
+            }
             recycler_content.adapter = mAdapter
             recycler_content.layoutManager = LinearLayoutManager(this)
         }
 
         mNewsInfoViewModel.mContent.observe(this,
             Observer<MutableList<BaseData>> { t ->
-                mAdapter.setOnLoadDataListener { _, _, onLoadDataCompleteCallback -> onLoadDataCompleteCallback.onLoadDataSuccess(t) }
+                mAdapter.setOnLoadDataListener { _, _, onLoadDataCompleteCallback ->
+                    onLoadDataCompleteCallback.onLoadDataSuccess(
+                        t
+                    )
+                }
                 recycler_content.adapter = mAdapter
                 recycler_content.layoutManager = LinearLayoutManager(this)
+            })
+
+        mNewsInfoViewModel.mNewsComment.observe(this,
+            Observer<MutableList<BaseData>> { t ->
+                mAdapter.addData(BaseMainContentData())
+                mAdapter.addData(t)
             })
     }
 

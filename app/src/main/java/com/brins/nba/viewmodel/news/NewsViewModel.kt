@@ -3,12 +3,15 @@ package com.brins.nba.viewmodel.news
 import android.util.Log
 import androidx.core.text.HtmlCompat
 import androidx.lifecycle.MutableLiveData
+import com.brins.nba.api.ServiceApi.APPKEY
 import com.brins.nba.api.data.BaseRequestData
 import com.brins.nba.api.data.CommentRequestData
 import com.brins.nba.api.data.news.SingleNewsListData
 import com.brins.nba.api.result.CommentResultData
+import com.brins.nba.ui.data.BaseMainCommentData
 import com.brins.nba.ui.data.BaseMainContentData
 import com.brins.nba.ui.data.BaseMainImageData
+import com.brins.nba.utils.MD5Util
 import com.brins.nba.viewmodel.BaseViewModel
 import com.chad.library.adapter.base.model.BaseData
 import kotlinx.coroutines.Dispatchers
@@ -21,9 +24,10 @@ class NewsViewModel(repository: NewsRepository) : BaseViewModel(repository) {
 
 
     val mNewsList: SingleNewsListData = SingleNewsListData.get()
-    val mNewsComment: MutableLiveData<List<CommentResultData>> = MutableLiveData()
+    val mNewsComment: MutableLiveData<MutableList<BaseData>> = MutableLiveData()
     val mContent: MutableLiveData<MutableList<BaseData>> = MutableLiveData()
 
+    /***获取新闻列表*/
     fun fetchNewsList() {
         launch(
             {
@@ -35,28 +39,37 @@ class NewsViewModel(repository: NewsRepository) : BaseViewModel(repository) {
         )
     }
 
+    /***内部获取新闻列表*/
     private suspend fun fetchNewsList(data: BaseRequestData) =
         withContext(Dispatchers.Main) {
             val resultData = (respository as NewsRepository).fetchNewsList(data)
             resultData
         }
 
-
+    /***获取新闻评论*/
     fun fetchNewsComment(data: CommentRequestData) {
         launch(
             {
                 val result = fetchNewsCommentInternal(data)
-                mNewsComment.value = result.data
+                mNewsComment.value = result
             }, {
                 //todo 异常处理
             }
         )
     }
 
+    /***内部获取新闻评论*/
     private suspend fun fetchNewsCommentInternal(data: CommentRequestData) =
         withContext(Dispatchers.Main) {
             val resultData = (respository as NewsRepository).fetchNewsComment(data)
-            resultData
+            val resultComments = mutableListOf<BaseData>()
+            if (!resultData.data.isNullOrEmpty()) {
+                for (comment in resultData.data!!) {
+                    resultComments.add(BaseMainCommentData(comment))
+                }
+            }
+            resultComments
+
         }
 
 
@@ -67,6 +80,7 @@ class NewsViewModel(repository: NewsRepository) : BaseViewModel(repository) {
                 GlobalScope.launch(Dispatchers.Main) {
                     mContent.value = contents
                     it.content = contents
+                    fetchNewsComment(CommentRequestData(it.docid))
                 }
             }
 

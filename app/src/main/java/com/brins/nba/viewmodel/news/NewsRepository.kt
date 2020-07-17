@@ -6,6 +6,7 @@ import com.brins.nba.api.data.CommentRequestData
 import com.brins.nba.api.response.NewsCommentResponse
 import com.brins.nba.api.response.NewsListResponse
 import com.brins.nba.repository.BaseRepository
+import com.brins.nba.utils.MD5Util
 
 class NewsRepository : BaseRepository() {
 
@@ -31,6 +32,7 @@ class NewsRepository : BaseRepository() {
     }
 
     suspend fun fetchNewsComment(data: CommentRequestData): NewsCommentResponse {
+        data.sign = MD5Util.md5(ServiceApi.APPKEY + data.docid + data.timestamp)
         return ServiceApi.getNewsListService().getNewsComments(
             ServiceApi.NBA_NEWS_COMMENTS
             , data.timestamp, data.sign, data.docid

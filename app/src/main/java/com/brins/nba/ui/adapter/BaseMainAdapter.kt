@@ -2,7 +2,9 @@ package com.brins.nba.ui.adapter
 
 import android.view.ViewGroup
 import com.brins.nba.R
+import com.brins.nba.ui.data.BaseMainCommentData
 import com.brins.nba.ui.data.BaseMainImageData
+import com.brins.nba.ui.holder.BaseMainCommentHolder
 import com.brins.nba.ui.holder.BaseMainNewsContentHolder
 import com.brins.nba.ui.holder.BaseMainNewsHolder
 import com.brins.nba.ui.holder.BaseMainNewsImageHolder
@@ -31,6 +33,9 @@ class BaseMainAdapter : BaseQuickAdapter<BaseData, BaseViewHolder<out BaseData>>
             }
             ITEM_NEWS_IMAGE -> {
                 return BaseMainNewsImageHolder(getItemView(R.layout.item_news_image, parent))
+            }
+            ITEM_NEWS_COMMENT -> {
+                return BaseMainCommentHolder(getItemView(R.layout.item_news_comment, parent))
             }
             else -> {
                 throw IllegalStateException("invalid view type")
