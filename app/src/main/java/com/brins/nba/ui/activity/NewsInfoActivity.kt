@@ -2,6 +2,7 @@ package com.brins.nba.ui.activity
 
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -47,7 +48,7 @@ class NewsInfoActivity : BaseActivity() {
         binding.viewModel = mNewsInfoViewModel
         binding.lifecycleOwner = this
         binding.mData = mNews
-
+        titleBar.listener = View.OnClickListener { finish() }
         if (mNews?.content == null) {
             mNewsInfoViewModel.parseHtml(mPos)
         } else {

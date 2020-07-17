@@ -13,38 +13,25 @@
     </data>
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:layout_height="match_parent"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
         tools:context=".ui.activity.NewsInfoActivity">
 
-        <LinearLayout
-            android:background="@color/colorPrimary"
+        <com.brins.nba.widget.CommonHeadView
             android:id="@+id/titleBar"
-            android:layout_height="?android:attr/actionBarSize"
             android:layout_width="match_parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:id="@+id/title_tv"
-                android:layout_gravity="start|center_vertical"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_width="wrap_content"
-                android:text="@string/fast_new"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-        </LinearLayout>
+            android:layout_height="50dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:title_text="@string/fast_new" />
 
         <TextView
             android:id="@+id/title"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:layout_width="match_parent"
             android:maxLines="2"
             android:text="@{mData.title}"
             android:textColor="@color/black"
@@ -54,10 +41,10 @@
 
         <TextView
             android:id="@+id/date"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
             android:maxLines="1"
             android:text="@{mData.ptime}"
             android:textColor="@color/gery"
@@ -78,13 +65,12 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_content"
-            android:layout_height="0dp"
-            android:layout_marginEnd="@dimen/dp_10"
-            android:layout_marginStart="10dp"
             android:layout_width="match_parent"
-            app:layout_constraintTop_toBottomOf="@id/date"
+            android:layout_height="0dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="@dimen/dp_10"
             app:layout_constraintBottom_toBottomOf="parent"
-            />
+            app:layout_constraintTop_toBottomOf="@id/date" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
