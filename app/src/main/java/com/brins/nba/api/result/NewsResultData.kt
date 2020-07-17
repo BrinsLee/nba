@@ -1,5 +1,7 @@
 package com.brins.nba.api.result
 
+import com.chad.library.adapter.base.model.BaseData
+
 class NewsResultData {
 
     var liveInfo: LiveResultData? = null
@@ -25,6 +27,8 @@ class NewsResultData {
     var imgsrc: String = ""
 
     var ptime: String = ""
+
+    var content: MutableList<BaseData>? = null
 
 
 }

@@ -1,7 +1,7 @@
 package com.brins.nba.viewmodel.live
 
 import androidx.lifecycle.MutableLiveData
-import com.brins.nba.api.data.BaseData
+import com.brins.nba.api.data.BaseRequestData
 import com.brins.nba.api.result.LiveResultData
 import com.brins.nba.viewmodel.BaseViewModel
 import kotlinx.coroutines.Dispatchers
@@ -19,7 +19,7 @@ class LiveViewModel(repository: LiveRepository) : BaseViewModel(repository) {
     fun fetchSchedule() {
         launch(
             {
-                val result = fetchSchedule(BaseData())
+                val result = fetchSchedule(BaseRequestData())
                 mSchedule!!.value = result.data
             }, {
 
@@ -27,7 +27,7 @@ class LiveViewModel(repository: LiveRepository) : BaseViewModel(repository) {
         )
     }
 
-    private suspend fun fetchSchedule(data: BaseData) =
+    private suspend fun fetchSchedule(data: BaseRequestData) =
         withContext(Dispatchers.Main) {
             val resultData = (respository as LiveRepository).fetchSchedule(data)
             resultData

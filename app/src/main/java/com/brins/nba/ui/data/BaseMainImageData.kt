@@ -1,10 +1,14 @@
 package com.brins.nba.ui.data
 
-import android.text.Spanned
 import com.brins.nba.ui.adapter.ITEM_NEWS_CONTENT
+import com.brins.nba.ui.adapter.ITEM_NEWS_IMAGE
 import com.chad.library.adapter.base.model.BaseData
 
-class BaseMainContentData(var content: Spanned? = null) : BaseData() {
+/**
+ * @author lipeilin
+ * @date 2020/7/17
+ */
+class BaseMainImageData(var imageUrl: String) : BaseData() {
 
 
     override fun isValidData(): Boolean {
@@ -20,6 +24,6 @@ class BaseMainContentData(var content: Spanned? = null) : BaseData() {
     }
 
     override fun getItemType(): Int {
-        return ITEM_NEWS_CONTENT
+        return ITEM_NEWS_IMAGE
     }
 }

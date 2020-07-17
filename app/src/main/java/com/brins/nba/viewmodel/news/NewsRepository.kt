@@ -1,7 +1,7 @@
 package com.brins.nba.viewmodel.news
 
 import com.brins.nba.api.ServiceApi
-import com.brins.nba.api.data.BaseData
+import com.brins.nba.api.data.BaseRequestData
 import com.brins.nba.api.data.CommentRequestData
 import com.brins.nba.api.response.NewsCommentResponse
 import com.brins.nba.api.response.NewsListResponse
@@ -25,7 +25,7 @@ class NewsRepository : BaseRepository() {
         }
     }
 
-    suspend fun fetchNewsList(data: BaseData): NewsListResponse {
+    suspend fun fetchNewsList(data: BaseRequestData): NewsListResponse {
         return ServiceApi.getNewsListService()
             .getNewsList(ServiceApi.NBA_NEWS_LIST, data.timestamp, data.sign).await()
     }

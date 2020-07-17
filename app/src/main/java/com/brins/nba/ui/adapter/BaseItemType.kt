@@ -7,3 +7,4 @@ package com.brins.nba.ui.adapter
 
 val ITEM_NEWS = 1000
 val ITEM_NEWS_CONTENT= 1001
+val ITEM_NEWS_IMAGE= 1002

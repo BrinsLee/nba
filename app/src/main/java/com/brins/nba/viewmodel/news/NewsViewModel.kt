@@ -1,21 +1,21 @@
 package com.brins.nba.viewmodel.news
 
-import android.graphics.drawable.Drawable
-import android.text.Html
-import android.text.Spanned
+import android.util.Log
 import androidx.core.text.HtmlCompat
 import androidx.lifecycle.MutableLiveData
-import com.brins.nba.api.data.BaseData
+import com.brins.nba.api.data.BaseRequestData
 import com.brins.nba.api.data.CommentRequestData
 import com.brins.nba.api.data.news.SingleNewsListData
 import com.brins.nba.api.result.CommentResultData
+import com.brins.nba.ui.data.BaseMainContentData
+import com.brins.nba.ui.data.BaseMainImageData
 import com.brins.nba.viewmodel.BaseViewModel
+import com.chad.library.adapter.base.model.BaseData
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.jsoup.Jsoup
-import java.net.URL
-import java.util.regex.Matcher
-import java.util.regex.Pattern
 
 class NewsViewModel(repository: NewsRepository) : BaseViewModel(repository) {
 
@@ -27,7 +27,7 @@ class NewsViewModel(repository: NewsRepository) : BaseViewModel(repository) {
     fun fetchNewsList() {
         launch(
             {
-                val result = fetchNewsList(BaseData())
+                val result = fetchNewsList(BaseRequestData())
                 mNewsList.value = result.data
             }, {
 
@@ -35,7 +35,7 @@ class NewsViewModel(repository: NewsRepository) : BaseViewModel(repository) {
         )
     }
 
-    private suspend fun fetchNewsList(data: BaseData) =
+    private suspend fun fetchNewsList(data: BaseRequestData) =
         withContext(Dispatchers.Main) {
             val resultData = (respository as NewsRepository).fetchNewsList(data)
             resultData
@@ -62,8 +62,14 @@ class NewsViewModel(repository: NewsRepository) : BaseViewModel(repository) {
 
     fun parseHtml(pos: Int) {
         launch({
-            val content = parseHtmlContent(mNewsList.value?.get(pos)!!.url)
-            mContent.value = content
+            mNewsList.value?.get(pos)?.let {
+                val contents = parseHtmlContent(it.url)
+                GlobalScope.launch(Dispatchers.Main) {
+                    mContent.value = contents
+                    it.content = contents
+                }
+            }
+
         }, {})
     }
 
@@ -98,42 +104,40 @@ class NewsViewModel(repository: NewsRepository) : BaseViewModel(repository) {
         val element = doc.select("div.content")
 
         val contentElement = element[0]
-        var content: StringBuilder = StringBuilder()
+        val pngs = doc.select("div.photo") // img中src以.png结尾
+        var j = 0
+        val list = mutableListOf<BaseData>()
         contentElement?.let {
-            if (contentElement.childNodes().isNotEmpty()) {
-                for (i in 0 until it.childNodeSize()) {
-                    content.append(it.childNode(i))
+            if (it.childNodes().isNotEmpty()) {
+                for (element in it.childNodes()) {
+                    for (i in 0 until element.childNodeSize()) {
+                        val content = element.childNode(i).toString()
+                        if (content.startsWith("<div class=\"photo\"> ", true)) {
+                            //图片链接
+                            list.add(
+                                BaseMainImageData(
+                                    pngs[j].select("a").select("img").attr("data-src")
+                                        .toString()
+                                )
+                            )
+                            j++
+                        } else {
+                            list.add(
+                                BaseMainContentData(
+                                    HtmlCompat.fromHtml(
+                                        content,
+                                        HtmlCompat.FROM_HTML_MODE_LEGACY
+                                    )
+                                )
+                            )
+                        }
+                        Log.d("NewsViewModel", content)
+                    }
                 }
             }
 
         }
-        val pngs = doc.select("div.photo") // img中src以.png结尾
-        var i = 0
-        HtmlCompat.fromHtml(
-            content.toString(), HtmlCompat.FROM_HTML_MODE_LEGACY,
-            object : Html.ImageGetter {
-                override fun getDrawable(source: String?): Drawable? {
-                    if (pngs.isNotEmpty()) {
-                        return try {
-                            val d =
-                                Drawable.createFromStream(
-                                    URL(
-                                        pngs[i].select("a").select("img").attr("data-src")
-                                            .toString()
-                                    ).openStream(), ""
-                                )
+        list
 
-                            d.setBounds(0, 0, d.intrinsicWidth, d.intrinsicHeight)
-                            i++
-                            d
-                        } catch (e: Exception) {
-                            i++
-                            null
-                        }
-                    }
-                    return null
-                }
-            }, null
-        )
     }
 }

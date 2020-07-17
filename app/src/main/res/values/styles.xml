@@ -4,7 +4,15 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:windowContentTransitions">true</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="AppTheme2" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/black_2</item>
+        <item name="colorPrimaryDark">@color/black_2</item>
+        <item name="android:windowContentTransitions">true</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
 </resources>
