@@ -22,7 +22,7 @@ class NewsViewModel(repository: NewsRepository) : BaseViewModel(repository) {
 
     val mNewsList: SingleNewsListData = SingleNewsListData.get()
     val mNewsComment: MutableLiveData<List<CommentResultData>> = MutableLiveData()
-    val mContent: MutableLiveData<Spanned> = MutableLiveData()
+    val mContent: MutableLiveData<MutableList<BaseData>> = MutableLiveData()
 
     fun fetchNewsList() {
         launch(
