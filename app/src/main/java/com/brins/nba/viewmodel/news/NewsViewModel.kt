@@ -9,6 +9,7 @@ import com.brins.nba.api.data.CommentRequestData
 import com.brins.nba.api.data.NewsInfoRequestData
 import com.brins.nba.api.data.news.SingleNewsListData
 import com.brins.nba.api.result.CommentResultData
+import com.brins.nba.api.result.NewsResultData
 import com.brins.nba.ui.data.BaseData
 import com.brins.nba.ui.data.BaseMainCommentData
 import com.brins.nba.ui.data.BaseMainContentData
@@ -33,7 +34,11 @@ class NewsViewModel(repository: NewsRepository) : BaseViewModel(repository) {
         launch(
             {
                 val result = fetchNewsList(NewsInfoRequestData(page))
-                mNewsList.value = result.data
+                val list = mutableListOf<NewsResultData>()
+                if (mNewsList.value != null)
+                    list.addAll(mNewsList.value!!)
+                list.addAll(result.data!!)
+                mNewsList.value = list
             }, {
 
             }

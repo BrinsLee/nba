@@ -10,6 +10,7 @@ import com.brins.nba.ui.data.BaseMainNewsData
 import com.brins.nba.utils.GlideHelper.GlideHelper
 import com.brins.nba.utils.jumpToWebViewActivity
 import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 
 
@@ -18,7 +19,8 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder
  * @date 2020/7/13
  */
 class BaseMainAdapter(list: MutableList<BaseMainNewsData>? = null) :
-    BaseQuickAdapter<BaseMainNewsData, BaseViewHolder>(R.layout.item_news_list, list) {
+    BaseQuickAdapter<BaseMainNewsData, BaseViewHolder>(R.layout.item_news_list, list),
+    LoadMoreModule {
 
 
     override fun convert(helper: BaseViewHolder, item: BaseMainNewsData) {

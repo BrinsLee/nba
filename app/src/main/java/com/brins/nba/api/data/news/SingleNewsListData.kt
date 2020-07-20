@@ -7,7 +7,7 @@ import com.brins.nba.api.result.NewsResultData
  * @author lipeilin
  * @date 2020/7/14
  */
-class SingleNewsListData : MutableLiveData<List<NewsResultData>>() {
+class SingleNewsListData : MutableLiveData<MutableList<NewsResultData>>() {
 
     companion object {
         private lateinit var sInstance: SingleNewsListData
