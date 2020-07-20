@@ -3,6 +3,7 @@ package com.brins.nba.viewmodel.news
 import com.brins.nba.api.ServiceApi
 import com.brins.nba.api.data.BaseRequestData
 import com.brins.nba.api.data.CommentRequestData
+import com.brins.nba.api.data.NewsInfoRequestData
 import com.brins.nba.api.response.NewsCommentResponse
 import com.brins.nba.api.response.NewsListResponse
 import com.brins.nba.repository.BaseRepository
@@ -26,9 +27,10 @@ class NewsRepository : BaseRepository() {
         }
     }
 
-    suspend fun fetchNewsList(data: BaseRequestData): NewsListResponse {
+    suspend fun fetchNewsList(data: NewsInfoRequestData): NewsListResponse {
+        data.sign = MD5Util.md5(ServiceApi.APPKEY + data.page + data.timestamp)
         return ServiceApi.getNewsListService()
-            .getNewsList(ServiceApi.NBA_NEWS_LIST, data.timestamp, data.sign).await()
+            .getNewsList(ServiceApi.NBA_NEWS_LIST, data.timestamp, data.sign, data.page).await()
     }
 
     suspend fun fetchNewsComment(data: CommentRequestData): NewsCommentResponse {

@@ -11,12 +11,11 @@ import com.brins.nba.api.data.CommentRequestData
 import com.brins.nba.api.result.NewsResultData
 import com.brins.nba.databinding.ActivityNewsInfoBinding
 import com.brins.nba.ui.adapter.BaseMainAdapter
+import com.brins.nba.ui.adapter.BaseNewsContentAdapter
+import com.brins.nba.ui.data.BaseData
 import com.brins.nba.ui.data.BaseMainContentData
 import com.brins.nba.utils.InjectorUtil
 import com.brins.nba.viewmodel.news.NewsViewModel
-import com.chad.library.adapter.base.OnLoadDataCompleteCallback
-import com.chad.library.adapter.base.OnLoadDataListener
-import com.chad.library.adapter.base.model.BaseData
 import kotlinx.android.synthetic.main.activity_news_info.*
 
 class NewsInfoActivity : BaseActivity() {
@@ -25,7 +24,7 @@ class NewsInfoActivity : BaseActivity() {
     private var mNewsInfoViewModel: NewsViewModel =
         InjectorUtil.getNewsViewModelFactory().create(NewsViewModel::class.java)
     private var mNews: NewsResultData? = null
-    private val mAdapter: BaseMainAdapter = BaseMainAdapter()
+    private val mAdapter: BaseNewsContentAdapter = BaseNewsContentAdapter()
 
     private val binding by lazy {
         DataBindingUtil.setContentView<ActivityNewsInfoBinding>(
@@ -52,21 +51,15 @@ class NewsInfoActivity : BaseActivity() {
         if (mNews?.content == null) {
             mNewsInfoViewModel.parseHtml(mPos)
         } else {
-            mAdapter.setOnLoadDataListener { _, _, onLoadDataCompleteCallback ->
-                mNewsInfoViewModel.fetchNewsComment(CommentRequestData(mNews!!.docid))
-                onLoadDataCompleteCallback.onLoadDataSuccess(mNews?.content)
-            }
+            mNewsInfoViewModel.fetchNewsComment(CommentRequestData(mNews!!.docid))
+            mAdapter.setNewData(mNews?.content)
             recycler_content.adapter = mAdapter
             recycler_content.layoutManager = LinearLayoutManager(this)
         }
 
         mNewsInfoViewModel.mContent.observe(this,
             Observer<MutableList<BaseData>> { t ->
-                mAdapter.setOnLoadDataListener { _, _, onLoadDataCompleteCallback ->
-                    onLoadDataCompleteCallback.onLoadDataSuccess(
-                        t
-                    )
-                }
+                mAdapter.setNewData(t)
                 recycler_content.adapter = mAdapter
                 recycler_content.layoutManager = LinearLayoutManager(this)
             })

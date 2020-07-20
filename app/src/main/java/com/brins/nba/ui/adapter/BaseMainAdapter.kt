@@ -1,25 +1,38 @@
 package com.brins.nba.ui.adapter
 
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.brins.nba.R
+import com.brins.nba.ui.data.BaseData
 import com.brins.nba.ui.data.BaseMainCommentData
 import com.brins.nba.ui.data.BaseMainImageData
-import com.brins.nba.ui.holder.BaseMainCommentHolder
-import com.brins.nba.ui.holder.BaseMainNewsContentHolder
-import com.brins.nba.ui.holder.BaseMainNewsHolder
-import com.brins.nba.ui.holder.BaseMainNewsImageHolder
+import com.brins.nba.ui.data.BaseMainNewsData
+import com.brins.nba.utils.GlideHelper.GlideHelper
+import com.brins.nba.utils.jumpToWebViewActivity
 import com.chad.library.adapter.base.BaseQuickAdapter
-import com.chad.library.adapter.base.BaseViewHolder
-import com.chad.library.adapter.base.model.BaseData
+import com.chad.library.adapter.base.viewholder.BaseViewHolder
+
 
 /**
  * @author lipeilin
  * @date 2020/7/13
  */
-class BaseMainAdapter : BaseQuickAdapter<BaseData, BaseViewHolder<out BaseData>>() {
+class BaseMainAdapter(list: MutableList<BaseMainNewsData>? = null) :
+    BaseQuickAdapter<BaseMainNewsData, BaseViewHolder>(R.layout.item_news_list, list) {
 
 
-    override fun onCreateViewHolderByType(
+    override fun convert(helper: BaseViewHolder, item: BaseMainNewsData) {
+        helper.setText(R.id.title, item.title)
+        helper.setText(R.id.comment_num, "${item.commonCount}")
+        GlideHelper.setImageResource(helper.getView(R.id.image_view), item.imgSrc)
+        helper.getView<ConstraintLayout>(R.id.view_root).setOnClickListener {
+
+            jumpToWebViewActivity(context, helper.layoutPosition)
+        }
+    }
+
+
+    /*override fun onCreateViewHolderByType(
         parent: ViewGroup?,
         viewType: Int
     ): BaseViewHolder<out BaseData> {
@@ -41,7 +54,7 @@ class BaseMainAdapter : BaseQuickAdapter<BaseData, BaseViewHolder<out BaseData>>
                 throw IllegalStateException("invalid view type")
             }
         }
-    }
+    }*/
 
 
 }

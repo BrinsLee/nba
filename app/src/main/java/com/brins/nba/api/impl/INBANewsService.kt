@@ -12,13 +12,14 @@ interface INBANewsService {
     @GET("?")
     fun getNewsList(
         @Query("service") service: String, @Query("timestamp") time: Long
-        , @Query("sign") sign: String
+        , @Query("sign") sign: String, @Query("page") page: Int
     ): Call<NewsListResponse>
 
 
     @GET("?")
     fun getNewsComments(
         @Query("service") service: String, @Query("timestamp") time: Long
-        , @Query("sign") sign: String, @Query("docid") docid: String): Call<NewsCommentResponse>
+        , @Query("sign") sign: String, @Query("docid") docid: String
+    ): Call<NewsCommentResponse>
 
 }

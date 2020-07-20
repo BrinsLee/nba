@@ -1,6 +1,5 @@
 package com.chad.library.adapter.base.listener;
 
-
 import androidx.recyclerview.widget.RecyclerView;
 
 /**

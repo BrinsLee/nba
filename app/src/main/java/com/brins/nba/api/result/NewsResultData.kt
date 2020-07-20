@@ -1,6 +1,7 @@
 package com.brins.nba.api.result
 
-import com.chad.library.adapter.base.model.BaseData
+import com.brins.nba.ui.data.BaseData
+
 
 class NewsResultData {
 

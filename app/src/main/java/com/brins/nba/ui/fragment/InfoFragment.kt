@@ -8,7 +8,6 @@ import com.brins.nba.ui.adapter.BaseMainAdapter
 import com.brins.nba.ui.data.BaseMainNewsData
 import com.brins.nba.utils.InjectorUtil
 import com.brins.nba.viewmodel.news.NewsViewModel
-import com.chad.library.adapter.base.model.BaseData
 import kotlinx.android.synthetic.main.fragment_info.*
 
 
@@ -28,40 +27,37 @@ class InfoFragment : BaseFragment() {
     }
 
     override fun initEventAndData() {
+
+        initRecyclerView()
         mNewsViewModel.mNewsList.observe(this,
             Observer {
-                mNewsAdapter = BaseMainAdapter()
-                mNewsAdapter!!.setOnLoadDataListener { _, _, onLoadDataCompleteCallback ->
-                    run {
-                        it?.let {
-                            val list: MutableList<BaseMainNewsData> = mutableListOf()
-                            it.forEach { it ->
-                                list.add(
-                                    BaseMainNewsData(
-                                        it.title,
-                                        it.commentCount,
-                                        it.imgsrc,
-                                        it.ptime,
-                                        it.url
-                                    )
-                                )
-                            }
-                            if (list.isNotEmpty()) {
-                                onLoadDataCompleteCallback.onLoadDataSuccess(list as List<BaseData>?)
-                            } else {
-                                onLoadDataCompleteCallback.onLoadDataFail()
-                            }
-                        }
+                it?.let {
+                    val list: MutableList<BaseMainNewsData> = mutableListOf()
+                    it.forEach { it ->
+                        list.add(
+                            BaseMainNewsData(
+                                it.title,
+                                it.commentCount,
+                                it.imgsrc,
+                                it.ptime,
+                                it.url
+                            )
+                        )
+                    }
+                    if (list.isNotEmpty()) {
+                        mNewsAdapter?.addData(list)
                     }
                 }
-
-                recycler.adapter = mNewsAdapter
-                recycler.layoutManager = LinearLayoutManager(activity)
             })
-
         mNewsViewModel.fetchNewsList()
-
 
     }
 
+    private fun initRecyclerView() {
+        mNewsAdapter = BaseMainAdapter()
+        mNewsAdapter!!.animationEnable = true
+        recycler.adapter = mNewsAdapter
+        recycler.layoutManager = LinearLayoutManager(activity)
+
+    }
 }

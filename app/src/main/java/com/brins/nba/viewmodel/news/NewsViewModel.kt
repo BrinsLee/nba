@@ -6,14 +6,15 @@ import androidx.lifecycle.MutableLiveData
 import com.brins.nba.api.ServiceApi.APPKEY
 import com.brins.nba.api.data.BaseRequestData
 import com.brins.nba.api.data.CommentRequestData
+import com.brins.nba.api.data.NewsInfoRequestData
 import com.brins.nba.api.data.news.SingleNewsListData
 import com.brins.nba.api.result.CommentResultData
+import com.brins.nba.ui.data.BaseData
 import com.brins.nba.ui.data.BaseMainCommentData
 import com.brins.nba.ui.data.BaseMainContentData
 import com.brins.nba.ui.data.BaseMainImageData
 import com.brins.nba.utils.MD5Util
 import com.brins.nba.viewmodel.BaseViewModel
-import com.chad.library.adapter.base.model.BaseData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -28,10 +29,10 @@ class NewsViewModel(repository: NewsRepository) : BaseViewModel(repository) {
     val mContent: MutableLiveData<MutableList<BaseData>> = MutableLiveData()
 
     /***获取新闻列表*/
-    fun fetchNewsList() {
+    fun fetchNewsList(page: Int = 0) {
         launch(
             {
-                val result = fetchNewsList(BaseRequestData())
+                val result = fetchNewsList(NewsInfoRequestData(page))
                 mNewsList.value = result.data
             }, {
 
@@ -40,7 +41,7 @@ class NewsViewModel(repository: NewsRepository) : BaseViewModel(repository) {
     }
 
     /***内部获取新闻列表*/
-    private suspend fun fetchNewsList(data: BaseRequestData) =
+    private suspend fun fetchNewsList(data: NewsInfoRequestData) =
         withContext(Dispatchers.Main) {
             val resultData = (respository as NewsRepository).fetchNewsList(data)
             resultData
